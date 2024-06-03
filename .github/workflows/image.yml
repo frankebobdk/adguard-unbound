@@ -5,8 +5,22 @@ on:
       - cron:  '0 * * * *'
   workflow_dispatch:
 
-#jobs:
- 
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      image-require-update: ${{ steps.check.outputs.needs-updating }}
+    steps:
+      - name: Docker Image Update Checker
+        id: check
+        uses: lucacome/docker-image-update-checker@v1
+        with:
+          base-image: adguard/adguardhome:latest
+          image: frankebob/adguard-unbound:latest
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
+          
   build:
     needs: check
     if: ${{ github.event_name != 'schedule' || needs.check.outputs.image-require-update == 'true' }}
