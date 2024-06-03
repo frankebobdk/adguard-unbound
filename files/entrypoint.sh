@@ -15,7 +15,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start Cloudflared
-cloudflared tunnel --config /opt/cloudflared/config.yml run
+cloudflared --config /opt/cloudflared/cloudflared.yml run
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start Cloudflared: $status"
