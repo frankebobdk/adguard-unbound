@@ -1,4 +1,4 @@
-FROM alpine:3.20.0-r0
+FROM alpine:3.20
 
 RUN apk add --no-cache \
         libcap \
