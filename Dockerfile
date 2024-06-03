@@ -1,8 +1,11 @@
 FROM alpine:edge
 
-RUN apk add --no-cache \
+# Add the testing repository and install dependencies
+RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk add --no-cache \
         libcap \
-        unbound=1.20.0-r1
+        unbound=1.20.0-r1 \
+        stubby@testing=0.4.3-r0
 
 WORKDIR /tmp
 
@@ -14,7 +17,7 @@ RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/clou
 
 COPY files/ /opt/
 
-# AdGuardHome
+# Install AdGuardHome
 RUN wget https://static.adguard.com/adguardhome/release/AdGuardHome_linux_amd64.tar.gz >/dev/null 2>&1 \
         && mkdir -p /opt/adguardhome/conf /opt/adguardhome/work \
         && tar xf AdGuardHome_linux_amd64.tar.gz ./AdGuardHome/AdGuardHome  --strip-components=2 -C /opt/adguardhome \
@@ -26,10 +29,10 @@ RUN wget https://static.adguard.com/adguardhome/release/AdGuardHome_linux_amd64.
 
 WORKDIR /opt/adguardhome/work
 
-VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound", "/opt/cloudflared"]
+VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound", "/opt/stubby"]
 
-# Expose ports (add ports for Cloudflared if needed)
-EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 3000/tcp 5053/udp 5053/tcp 5153/tcp 5153/udp
+# Expose ports (add ports for Stubby if needed)
+EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 3000/tcp 5053/udp 5053/tcp 5253/tcp 5253/udp
 
 HEALTHCHECK --interval=30s --timeout=15s --start-period=5s\
             CMD sh /opt/healthcheck.sh
