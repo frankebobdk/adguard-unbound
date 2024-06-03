@@ -2,7 +2,7 @@ FROM alpine:3.20
 
 RUN apk add --no-cache \
         libcap \
-        unbound=1.20.0-r1
+        unbound=1.20.0-r0
 
 WORKDIR /tmp
 
