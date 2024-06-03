@@ -26,7 +26,7 @@ RUN wget https://static.adguard.com/adguardhome/release/AdGuardHome_linux_amd64.
 
 WORKDIR /opt/adguardhome/work
 
-VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound"]
+VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound", "/opt/cloudflared"]
 
 # Expose ports (add ports for Cloudflared if needed)
 EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 3000/tcp 5053/udp 5053/tcp 5153/tcp 5153/udp
