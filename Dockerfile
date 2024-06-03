@@ -3,11 +3,14 @@ FROM alpine:edge
 RUN apk add --no-cache \
         libcap \
         unbound=1.20.0-r1
-       # stubby=0.4.3-r0
 
 WORKDIR /tmp
 
 RUN wget https://www.internic.net/domain/named.root -qO- >> /etc/unbound/root.hints
+
+# Install Cloudflared
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /usr/local/bin/cloudflared \
+    && chmod +x /usr/local/bin/cloudflared
 
 COPY files/ /opt/
 
@@ -25,6 +28,7 @@ WORKDIR /opt/adguardhome/work
 
 VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound"]
 
+# Expose ports (add ports for Cloudflared if needed)
 EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 3000/tcp 5053/udp 5053/tcp
 
 HEALTHCHECK --interval=30s --timeout=15s --start-period=5s\
