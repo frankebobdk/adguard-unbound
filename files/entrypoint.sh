@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 
 # Start unbound
 echo "Starting unbound..."
