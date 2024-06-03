@@ -17,7 +17,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start Cloudflared
-cloudflared --config /opt/cloudflared/cloudflared.yml run
+cloudflared --config /opt/unbound/cloudflared.yml run
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start Cloudflared: $status"
@@ -25,7 +25,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start Stubby
-stubby -C /opt/stubby/stubby.yml
+stubby -C /opt/unbound/stubby.yml
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start Stubby: $status"
