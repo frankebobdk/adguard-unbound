@@ -1,11 +1,32 @@
 #!/bin/sh
 
-FILE=/opt/adguardhome/conf/AdGuardHome.yaml
-
-if [! test -f $FILE]
-then
-   curl -q -s -t 1 localhost:3000 > /dev/null && printf 'Waiting for config to be finished' || exit 1
-elif [PORT="$(cat $FILE | grep '^bind_port:' | cut -f2 -d' ')" && ! curl -q -t 1 localhost:$PORT 2> /dev/null]
-then
+# Check if unbound is running
+pgrep unbound > /dev/null
+if [ $? -ne 0 ]; then
+    echo "unbound is not running!"
     exit 1
 fi
+
+# Check if AdGuardHome is running
+pgrep AdGuardHome > /dev/null
+if [ $? -ne 0 ]; then
+    echo "AdGuardHome is not running!"
+    exit 1
+fi
+
+# Check if Cloudflared is running
+pgrep cloudflared > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Cloudflared is not running!"
+    exit 1
+fi
+
+# Check if Stubby is running
+pgrep stubby > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Stubby is not running!"
+    exit 1
+fi
+
+echo "All services are running!"
+exit 0
