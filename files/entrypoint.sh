@@ -1,5 +1,6 @@
 #!/bin/ash
 
+# Start unbound
 unbound -c /opt/unbound/unbound.conf
 status=$?
 if [ $status -ne 0 ]; then
@@ -7,6 +8,7 @@ if [ $status -ne 0 ]; then
   exit $status
 fi
 
+# Start AdGuardHome
 /opt/adguardhome/AdGuardHome -c /opt/adguardhome/conf/AdGuardHome.yaml -w /opt/adguardhome/work --no-check-update
 status=$?
 if [ $status -ne 0 ]; then
@@ -19,6 +21,14 @@ cloudflared --config /opt/cloudflared/cloudflared.yml run
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start Cloudflared: $status"
+  exit $status
+fi
+
+# Start Stubby
+stubby -C /opt/stubby/stubby.yml
+status=$?
+if [ $status -ne 0 ]; then
+  echo "Failed to start Stubby: $status"
   exit $status
 fi
 
