@@ -2,8 +2,8 @@ FROM alpine:edge
 
 RUN apk add --no-cache \
         libcap \
-        unbound=1.20.0-r1 \
-        stubby=0.4.3-r0
+        unbound=1.20.0-r1
+       # stubby=0.4.3-r0
 
 WORKDIR /tmp
 
