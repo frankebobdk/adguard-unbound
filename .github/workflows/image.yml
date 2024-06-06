@@ -15,7 +15,7 @@ jobs:
         id: check
         uses: lucacome/docker-image-update-checker@v1
         with:
-          base-image: frankebob/adguard-unbound:latest
+          base-image: adguard/adguardhome:latest
           image: frankebob/adguard-unbound:latest
         if: ${{ github.event_name == 'schedule' }}
         env:
