@@ -15,6 +15,11 @@ RUN wget https://www.internic.net/domain/named.root -qO- >> /etc/unbound/root.hi
 RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /usr/local/bin/cloudflared \
     && chmod +x /usr/local/bin/cloudflared
 
+# Copy configuration files to the respective directories
+COPY files/unbound/unbound.conf /opt/unbound/unbound.conf
+COPY files/cloudflared/cloudflared.yml /opt/cloudflared/cloudflared.yml
+COPY files/stubby/stubby.yml /opt/stubby/stubby.yml
+
 COPY files/ /opt/
 
 # Install AdGuardHome
