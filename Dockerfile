@@ -37,7 +37,7 @@ WORKDIR /opt/adguardhome/work
 VOLUME ["/opt/adguardhome/conf", "/opt/adguardhome/work", "/opt/unbound", "/opt/stubby"]
 
 # Expose ports (add ports for Stubby if needed)
-EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 3000/tcp 5053/udp 5053/tcp 5253/tcp 5253/udp
+EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 443/udp 853/tcp 3000/tcp 5053/tcp 5053/udp 5253/tcp 5253/udp
 
 HEALTHCHECK --interval=30s --timeout=15s --start-period=5s\
             CMD sh /opt/healthcheck.sh
