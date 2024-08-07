@@ -2,7 +2,7 @@ Container combining AdGuard Home and Unbound. I don't like the fact you cannot u
 The only way I found was using the Docker container IP address, which to me isn't reliable enough.
 
 **Base:** alpine:3.20.0 \
-**Unbound:** 1.20.0-r1 \
+**Unbound:** 1.20.0-r2 \
 **AdGuardHome:** 0.107.5 \
 **Stubby:** 0.4.3
 
