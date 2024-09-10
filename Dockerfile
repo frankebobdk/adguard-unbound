@@ -4,7 +4,7 @@ FROM alpine:edge
 RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk add --no-cache \
         libcap \
-        unbound=1.20.0-r2 \
+        unbound=1.21.0-r0 \
         stubby@testing=0.4.3-r0
 
 WORKDIR /tmp
